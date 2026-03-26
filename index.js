@@ -1,6 +1,12 @@
 import { initializeApp, cert } from "https://esm.sh/firebase-admin/app";
 import { getFirestore } from "https://esm.sh/firebase-admin/firestore";
-
+function corsHeaders() {
+  return {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
+}
 // حط بيانات JSON هنا 👇
 const serviceAccount = {
   {
