@@ -1,26 +1,23 @@
-import express from "express";
-import cors from "cors";
+export default {
+  async fetch(req) {
+    const url = new URL(req.url);
 
-const app = express();
-app.use(cors());
-app.use(express.json());
+    // Test route
+    if (url.pathname === "/") {
+      return new Response("API is running 🚀");
+    }
 
-app.get("/", (req, res) => {
-  res.send("API is running 🚀");
-});
+    // License check
+    if (url.pathname === "/check-license" && req.method === "POST") {
+      const body = await req.json();
 
-app.post("/check-license", (req, res) => {
-  const { key } = req.body;
+      if (body.key === "FADY-123") {
+        return Response.json({ valid: true });
+      }
 
-  if (key === "FADY-123") {
-    return res.json({ valid: true });
+      return Response.json({ valid: false });
+    }
+
+    return new Response("Not Found", { status: 404 });
   }
-
-  res.json({ valid: false });
-});
-
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on ${PORT}`);
-});
+};
