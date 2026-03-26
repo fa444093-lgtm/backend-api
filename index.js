@@ -37,9 +37,15 @@ export default {
 
     // Test
     if (url.pathname === "/") {
-      return new Response("API is running 🚀");
+      return Response.json({ valid: true }, {
+      headers: corsHeaders(),
+      });
     }
-
+if (req.method === "OPTIONS") {
+  return new Response(null, {
+    headers: corsHeaders(),
+  });
+}
     // License Check
     if (url.pathname === "/check-license" && req.method === "POST") {
       try {
